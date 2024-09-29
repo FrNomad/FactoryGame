@@ -12,8 +12,10 @@ namespace Config {
 	const double PRERENDER_ZOOMLEVEL = 15.0;
 	const double MIN_ZOOMLEVEL = 3.0;
 	const double MAX_ZOOMLEVEL = 100.0;
+	const double ZOOM_SENSITIVITY = 1.1;
 
-	const Uint8 MESH_OPACITY = 100;
+	const Uint8 MESH_OPACITY_LV1 = 100;
+	const Uint8 MESH_OPACITY_LV2 = 200;
 
 }
 

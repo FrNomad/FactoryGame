@@ -13,10 +13,15 @@ Struct::Coordinate GameMap::_absoluteCoords(Struct::Coordinate* coord)
 	return { absoluteX, absoluteY };
 }
 
+void GameMap::_setZoomUnit(void)
+{
+	if (this->zoomLevel < 20) this->zoomUnit = 1;
+	else if (this->zoomLevel < 50) this->zoomUnit = 2;
+	else this->zoomUnit = 4;
+}
+
 void GameMap::_renderVisibleMesh(SDL_Renderer* renderer, Struct::Coordinate* min, Struct::Coordinate* max)
 {
-
-	SDL_SetRenderDrawColor(renderer, 255, 255, 255, Config::MESH_OPACITY);
 
 	Struct::Coordinate absoluteMin = this->_absoluteCoords(min);
 	Struct::Coordinate absoluteMax = this->_absoluteCoords(max);
@@ -24,12 +29,24 @@ void GameMap::_renderVisibleMesh(SDL_Renderer* renderer, Struct::Coordinate* min
 	double ratio = Config::SCREEN_WIDTH / (2.0 * this->zoomLevel);
 
 	for (int x = min->x; x <= max->x; x++) {
+		if (x % this->zoomUnit != 0) continue;
+
 		double absoluteX = (x - this->centerPos.x) * ratio + Config::SCREEN_WIDTH * 0.5;
+
+		if (x % (5 * this->zoomUnit) == 0) SDL_SetRenderDrawColor(renderer, Config::MESH_OPACITY_LV2, Config::MESH_OPACITY_LV2, Config::MESH_OPACITY_LV2, 255);
+		else SDL_SetRenderDrawColor(renderer, Config::MESH_OPACITY_LV1, Config::MESH_OPACITY_LV1, Config::MESH_OPACITY_LV1, 255);
+		
 		SDL_RenderDrawLine(renderer, absoluteX, absoluteMin.y, absoluteX, absoluteMax.y);
 	}
 
 	for (int y = min->y; y <= max->y; y++) {
+		if (y % this->zoomUnit != 0) continue;
+
 		double absoluteY = (this->centerPos.y - y) * ratio + Config::SCREEN_HEIGHT * 0.5;
+
+		if (y % (5 * this->zoomUnit) == 0) SDL_SetRenderDrawColor(renderer, Config::MESH_OPACITY_LV2, Config::MESH_OPACITY_LV2, Config::MESH_OPACITY_LV2, 255);
+		else SDL_SetRenderDrawColor(renderer, Config::MESH_OPACITY_LV1, Config::MESH_OPACITY_LV1, Config::MESH_OPACITY_LV1, 255);
+
 		SDL_RenderDrawLine(renderer, absoluteMin.x, absoluteY, absoluteMax.x, absoluteY);
 	}
 
@@ -62,20 +79,33 @@ void GameMap::renderWholeMap(SDL_Renderer* renderer)
 
 }
 
-void GameMap::moveWholeMap(Struct::Coordinate* coord)
+void GameMap::dragByMouse(int dx, int dy)
 {
-	this->centerPos = *coord;
+	double ratio = (2.0 * this->zoomLevel) / Config::SCREEN_WIDTH;
+
+	this->centerPos.x += dx * ratio;
+	this->centerPos.y -= dy * ratio;
 }
 
 void GameMap::changeZoomLevel(double level, int mouseX, int mouseY)
 {
-	this->zoomLevel += level;
-	if (this->zoomLevel < Config::MIN_ZOOMLEVEL) {
-		this->zoomLevel = Config::MIN_ZOOMLEVEL;
+	double zoomRatio = pow(Config::ZOOM_SENSITIVITY, level);
+	double newZoomLevel = this->zoomLevel * zoomRatio;
+	if (newZoomLevel < Config::MIN_ZOOMLEVEL || newZoomLevel > Config::MAX_ZOOMLEVEL) {
 		return;
 	}
-	if (this->zoomLevel > Config::MAX_ZOOMLEVEL) {
-		this->zoomLevel = Config::MAX_ZOOMLEVEL;
-		return;
-	}
+
+	double absoluteRatio = Config::SCREEN_WIDTH / (2.0 * this->zoomLevel);
+	double newX = (1.0 - zoomRatio) * (this->centerPos.x + (mouseX - Config::SCREEN_WIDTH * 0.5)/absoluteRatio) + zoomRatio * this->centerPos.x;
+	double newY = (1.0 - zoomRatio) * (this->centerPos.y - (mouseY - Config::SCREEN_HEIGHT * 0.5) / absoluteRatio) + zoomRatio * this->centerPos.y;
+
+	this->centerPos = { newX, newY };
+	this->zoomLevel = newZoomLevel;
+	this->_setZoomUnit();
+}
+
+void GameMap::getCurrentCenter(Struct::Coordinate* coord)
+{
+	coord->x = this->centerPos.x;
+	coord->y = this->centerPos.y;
 }
