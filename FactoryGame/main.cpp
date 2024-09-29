@@ -1,7 +1,7 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <iostream>
-#include "static.h"
+#include "Static.h"
 #include "GameMap.h"
 using namespace std;
 

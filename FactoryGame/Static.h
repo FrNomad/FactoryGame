@@ -1,7 +1,7 @@
 #pragma once
 
 #include <SDL2/SDL.h>
-#include<iostream>
+#include <iostream>
 using namespace std;
 
 namespace Config {
@@ -32,6 +32,13 @@ namespace Struct {
 		double x;
 		double y;
 	} Coordinate;
+
+	typedef enum {
+		DIR_EAST,
+		DIR_WEST,
+		DIR_SOUTH,
+		DIR_NORTH
+	} Direction;
 
 }
 

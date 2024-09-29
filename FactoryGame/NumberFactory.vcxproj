@@ -24,6 +24,7 @@
     <ProjectGuid>{09650d77-7359-40dd-8575-673bb8db427a}</ProjectGuid>
     <RootNamespace>NumberFactory</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <ProjectName>FactoryGame</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -137,12 +138,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="GameMap.cpp" />
+    <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="static.cpp" />
+    <ClCompile Include="Static.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameMap.h" />
-    <ClInclude Include="static.h" />
+    <ClInclude Include="GameObject.h" />
+    <ClInclude Include="Static.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

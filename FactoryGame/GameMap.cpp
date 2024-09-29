@@ -1,7 +1,7 @@
 #include <SDL2/SDL.h>
 #include <cmath>
 #include "GameMap.h"
-#include "static.h"
+#include "Static.h"
 
 Struct::Coordinate GameMap::_absoluteCoords(Struct::Coordinate* coord)
 {

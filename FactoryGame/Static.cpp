@@ -4,7 +4,7 @@
 #include <SDL2/SDL_image.h>
 #include <iostream>
 
-#include "static.h"
+#include "Static.h"
 using namespace std;
 
 bool init(SDL_Window*& window, SDL_Renderer*& renderer, int width, int height) {

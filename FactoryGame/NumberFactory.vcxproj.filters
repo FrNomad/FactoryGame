@@ -18,18 +18,24 @@
     <ClCompile Include="main.cpp">
       <Filter>Resource Files</Filter>
     </ClCompile>
-    <ClCompile Include="static.cpp">
-      <Filter>Resource Files</Filter>
-    </ClCompile>
     <ClCompile Include="GameMap.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Static.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="static.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
     <ClInclude Include="GameMap.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Static.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

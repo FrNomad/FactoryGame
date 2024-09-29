@@ -1,1 +1,1 @@
-# NumberFactory
+# FactoryGame
