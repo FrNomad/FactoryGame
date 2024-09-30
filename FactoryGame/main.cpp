@@ -10,6 +10,8 @@ void mainLoop(SDL_Renderer* renderer) {
     SDL_Event e;
 
     GameMap* gameMap = new GameMap();
+    Dulgi* dulgi = new Dulgi(renderer);
+    gameMap->attachObject(dulgi);
 
     int mouseX, mouseY;
     int offsetX, offsetY;
@@ -29,6 +31,9 @@ void mainLoop(SDL_Renderer* renderer) {
                     offsetX = mouseX;
                     offsetY = mouseY;
                 }
+                else if (e.button.button == SDL_BUTTON_LEFT) {
+                    dulgi->changeFrame();
+                }
             }
             else if (e.type == SDL_MOUSEBUTTONUP) {
                 if (e.button.button == SDL_BUTTON_MIDDLE) {
@@ -44,6 +49,28 @@ void mainLoop(SDL_Renderer* renderer) {
             }
             else if (e.type == SDL_QUIT) {
                 quit = true;
+            }
+            if (e.type == SDL_KEYDOWN) {
+                switch (e.key.keysym.sym) {
+                case SDLK_ESCAPE:
+                    quit = true;
+                    break;
+                case SDLK_UP:
+                    dulgi->moveBy({ 0, 1 });
+                    break;
+                case SDLK_DOWN:
+                    dulgi->moveBy({ 0, -1 });
+                    break;
+                case SDLK_LEFT:
+                    dulgi->moveBy({ -1, 0 });
+                    break;
+                case SDLK_RIGHT:
+                    dulgi->moveBy({ 1, 0 });
+                    break;
+                case SDLK_r:
+                    dulgi->rotate(Struct::ROTATE_CW);
+                    break;
+                }
             }
         }
 

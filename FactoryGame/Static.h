@@ -34,13 +34,19 @@ namespace Struct {
 	} Coordinate;
 
 	typedef enum {
-		DIR_EAST,
-		DIR_WEST,
-		DIR_SOUTH,
-		DIR_NORTH
+		DIR_SOUTH = 0,
+		DIR_EAST = 90,
+		DIR_NORTH = 180,
+		DIR_WEST = 270
 	} Direction;
+
+	typedef enum {
+		ROTATE_CW = 1,
+		ROTATE_CCW = -1
+	} RotateDir;
 
 }
 
 bool init(SDL_Window*&, SDL_Renderer*&, int, int);
-SDL_Texture* loadTexture(const string&, SDL_Renderer*);
+SDL_Texture* cropTexture(SDL_Texture*, SDL_Rect, SDL_Renderer*);
+SDL_Texture** loadTexture(const string&, SDL_Renderer*, int);

@@ -2,6 +2,7 @@
 #include <SDL2/SDL.h>
 #include <vector>
 #include "Static.h"
+#include "GameObject.h"
 using namespace std;
 
 class GameMap
@@ -10,9 +11,11 @@ private:
 	Struct::Coordinate centerPos;
 	double zoomLevel;
 	int zoomUnit;
-	Struct::Coordinate _absoluteCoords(Struct::Coordinate*);
+	vector<GameObject*> innerObjects;
+	Struct::Coordinate _absoluteCoords(Struct::Coordinate);
 	void _setZoomUnit(void);
 	void _renderVisibleMesh(SDL_Renderer*, Struct::Coordinate*, Struct::Coordinate*);
+	void _renderObject(SDL_Renderer*, GameObject*, Struct::Coordinate*, Struct::Coordinate*);
 	void _renderVisibleObjects(SDL_Renderer*, Struct::Coordinate*, Struct::Coordinate*);
 public:
 	GameMap() {
@@ -24,5 +27,6 @@ public:
 	void dragByMouse(int, int);
 	void changeZoomLevel(double, int, int);
 	void getCurrentCenter(Struct::Coordinate*);
+	void attachObject(GameObject*);
 };
 
