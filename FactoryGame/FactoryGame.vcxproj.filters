@@ -21,10 +21,10 @@
     <ClCompile Include="GameMap.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="GameObject.cpp">
+    <ClCompile Include="Static.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Static.cpp">
+    <ClCompile Include="GameObject.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -32,10 +32,10 @@
     <ClInclude Include="GameMap.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="GameObject.h">
+    <ClInclude Include="Static.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Static.h">
+    <ClInclude Include="GameObject.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
