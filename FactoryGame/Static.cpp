@@ -47,9 +47,9 @@ SDL_Texture* cropTexture(SDL_Texture* texture, SDL_Rect rect, SDL_Renderer* rend
     return newTexture;
 }
 
-SDL_Texture** loadTexture(const string& path, SDL_Renderer* renderer, int frame_number=1)
+SDL_Texture** loadTexture(const string& path, SDL_Renderer* renderer, int frame_number_width=1, int frame_number_height=1)
 {
-    SDL_Texture** textureList = new SDL_Texture * [frame_number];
+    SDL_Texture** textureList = new SDL_Texture * [frame_number_width * frame_number_height];
 
     SDL_Surface* surface = IMG_Load(path.c_str());
     if (surface == nullptr) {
@@ -66,13 +66,16 @@ SDL_Texture** loadTexture(const string& path, SDL_Renderer* renderer, int frame_
 
     int width, height;
     SDL_QueryTexture(baseTexture, NULL, NULL, &width, &height);
-    int widthUnit = (int)(width / frame_number);
+    int widthUnit = (int)(width / frame_number_width);
+    int heightUnit = (int)(height / frame_number_height);
 
-    for (int i = 0; i < frame_number; i++) {
-        textureList[i] = cropTexture(baseTexture, { widthUnit * i, 0, widthUnit, height - 1 }, renderer);
-        if (textureList[i] == nullptr) {
-            cerr << "Unable to crop the texture! SDL_Error: " << SDL_GetError() << endl;
-            return nullptr;
+    for (int i = 0; i < frame_number_width; i++) {
+        for (int j = 0; j < frame_number_height; j++) {
+            textureList[frame_number_width*j + i] = cropTexture(baseTexture, { widthUnit * i, heightUnit * j, widthUnit, heightUnit }, renderer);
+            if (textureList[i] == nullptr) {
+                cerr << "Unable to crop the texture! SDL_Error: " << SDL_GetError() << endl;
+                return nullptr;
+            }
         }
     }
 

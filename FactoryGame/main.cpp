@@ -10,8 +10,8 @@ void mainLoop(SDL_Renderer* renderer) {
     SDL_Event e;
 
     GameMap* gameMap = new GameMap();
-    Dulgi* dulgi = new Dulgi(renderer);
-    gameMap->attachObject(dulgi);
+    SequentialGameObject* sample = new SequentialGameObject(renderer, 7, 5, 20, "textures/factorio_biter.png", { 0, 0 }, Struct::DIR_SOUTH, 8, 2);
+    gameMap->attachObject(sample);
 
     int mouseX, mouseY;
     int offsetX, offsetY;
@@ -30,9 +30,6 @@ void mainLoop(SDL_Renderer* renderer) {
                     isDragging = true;
                     offsetX = mouseX;
                     offsetY = mouseY;
-                }
-                else if (e.button.button == SDL_BUTTON_LEFT) {
-                    dulgi->changeFrame();
                 }
             }
             else if (e.type == SDL_MOUSEBUTTONUP) {
@@ -56,19 +53,19 @@ void mainLoop(SDL_Renderer* renderer) {
                     quit = true;
                     break;
                 case SDLK_UP:
-                    dulgi->moveBy({ 0, 1 });
+                    sample->moveBy({ 0, 1 });
                     break;
                 case SDLK_DOWN:
-                    dulgi->moveBy({ 0, -1 });
+                    sample->moveBy({ 0, -1 });
                     break;
                 case SDLK_LEFT:
-                    dulgi->moveBy({ -1, 0 });
+                    sample->moveBy({ -1, 0 });
                     break;
                 case SDLK_RIGHT:
-                    dulgi->moveBy({ 1, 0 });
+                    sample->moveBy({ 1, 0 });
                     break;
                 case SDLK_r:
-                    dulgi->rotate(Struct::ROTATE_CW);
+                    sample->rotate(Struct::ROTATE_CW);
                     break;
                 }
             }

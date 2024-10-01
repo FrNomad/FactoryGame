@@ -1,3 +1,4 @@
+#include <cmath>
 #include "GameObject.h"
 #include "Static.h"
 
@@ -72,7 +73,26 @@ Struct::Direction GameObject::getDirection(void)
     return this->direction;
 }
 
-void Dulgi::changeFrame(void)
+void GameObject::gotoFrameAfter(void)
 {
     this->frame = (this->frame + 1) % this->frameNumber;
+}
+
+void GameObject::gotoFrameBefore(void)
+{
+    this->frame = (this->frame - 1) % this->frameNumber;
+}
+
+void SequentialGameObject::setFrameSpeed(double frameSpeed)
+{
+    this->frameSpeed = frameSpeed;
+}
+
+void SequentialGameObject::updateFrame(long long currentClock)
+{
+    if (currentClock - this->preRenderPoint >= 1000 * abs(this->frameSpeed)) {
+        if(this->frameSpeed >= 0) this->gotoFrameAfter();
+        else this->gotoFrameBefore();
+        this->preRenderPoint = currentClock;
+    }
 }

@@ -1,4 +1,5 @@
 #include <SDL2/SDL.h>
+#include <iostream>
 #include <cmath>
 #include "GameMap.h"
 #include "Static.h"
@@ -65,6 +66,12 @@ void GameMap::_renderObject(SDL_Renderer* renderer, GameObject* object, Struct::
 	if (((min->x > x1 || max->x < x1) && (min->x > x2 || max->x < x2)) || (min->y > y1 || max->y < y1) && (min->y > y2 || max->y < y2)) {
 		return;
 	}
+
+	SequentialGameObject* sequential = dynamic_cast<SequentialGameObject*>(object);
+	if (sequential != nullptr) {
+		sequential->updateFrame(this->getInnerClock());
+	}
+
 	Struct::Coordinate pos1 = this->_absoluteCoords({ x1, y2 });
 	Struct::Coordinate pos2 = this->_absoluteCoords({ x2, y1 });
 
@@ -131,6 +138,13 @@ void GameMap::getCurrentCenter(Struct::Coordinate* coord)
 {
 	coord->x = this->centerPos.x;
 	coord->y = this->centerPos.y;
+}
+
+unsigned long long GameMap::getInnerClock(void)
+{
+	auto currentTime = std::chrono::system_clock::now();
+	auto elapsed = std::chrono::duration_cast<std::chrono::microseconds>(currentTime - this->innerClockZero);
+	return static_cast<unsigned long long>(elapsed.count());
 }
 
 void GameMap::attachObject(GameObject* object)

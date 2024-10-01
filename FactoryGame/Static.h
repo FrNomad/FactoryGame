@@ -49,4 +49,4 @@ namespace Struct {
 
 bool init(SDL_Window*&, SDL_Renderer*&, int, int);
 SDL_Texture* cropTexture(SDL_Texture*, SDL_Rect, SDL_Renderer*);
-SDL_Texture** loadTexture(const string&, SDL_Renderer*, int);
+SDL_Texture** loadTexture(const string&, SDL_Renderer*, int, int);
