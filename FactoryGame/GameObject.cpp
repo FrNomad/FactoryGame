@@ -73,14 +73,9 @@ Struct::Direction GameObject::getDirection(void)
     return this->direction;
 }
 
-void GameObject::gotoFrameAfter(void)
+void GameObject::gotoNextFrame(int num)
 {
-    this->frame = (this->frame + 1) % this->frameNumber;
-}
-
-void GameObject::gotoFrameBefore(void)
-{
-    this->frame = (this->frame - 1) % this->frameNumber;
+    this->frame = (this->frame + num) % this->frameNumber;
 }
 
 void SequentialGameObject::setFrameSpeed(double frameSpeed)
@@ -90,9 +85,10 @@ void SequentialGameObject::setFrameSpeed(double frameSpeed)
 
 void SequentialGameObject::updateFrame(long long currentClock)
 {
-    if (currentClock - this->preRenderPoint >= 1000 * abs(this->frameSpeed)) {
-        if(this->frameSpeed >= 0) this->gotoFrameAfter();
-        else this->gotoFrameBefore();
+    int jumpFrames = floor((currentClock - this->preRenderPoint) / (1000 * abs(this->frameSpeed)));
+    if (jumpFrames > 0) {
+        if (this->frameSpeed >= 0) this->gotoNextFrame(jumpFrames);
+        else this->gotoNextFrame((-1) * jumpFrames);
         this->preRenderPoint = currentClock;
     }
 }

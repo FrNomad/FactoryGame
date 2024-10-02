@@ -28,8 +28,7 @@ public:
     virtual void updatePosition(Struct::Coordinate);
     virtual void moveBy(Struct::Coordinate);
     virtual void rotate(Struct::RotateDir);
-    virtual void gotoFrameAfter(void);
-    virtual void gotoFrameBefore(void);
+    virtual void gotoNextFrame(int);
     virtual Struct::Coordinate getPosition(void);
     virtual int getWidth(void);
     virtual int getHeight(void);

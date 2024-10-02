@@ -10,7 +10,7 @@ void mainLoop(SDL_Renderer* renderer) {
     SDL_Event e;
 
     GameMap* gameMap = new GameMap();
-    SequentialGameObject* sample = new SequentialGameObject(renderer, 7, 5, 20, "textures/factorio_biter.png", { 0, 0 }, Struct::DIR_SOUTH, 8, 2);
+    SequentialGameObject* sample = new SequentialGameObject(renderer, 7, 5, 15, "textures/factorio_biter.png", { -3, -3 }, Struct::DIR_SOUTH, 8, 2);
     gameMap->attachObject(sample);
 
     int mouseX, mouseY;
