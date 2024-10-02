@@ -2,6 +2,8 @@
 
 #include <SDL2/SDL.h>
 #include <iostream>
+#include "GameMap.h"
+#include "GameObject.h"
 using namespace std;
 
 namespace Config {
@@ -44,6 +46,13 @@ namespace Struct {
 		ROTATE_CW = 1,
 		ROTATE_CCW = -1
 	} RotateDir;
+
+	typedef struct {
+		SDL_Renderer* renderer;
+		GameMap* gameMap;
+		GameObject* object;
+		bool* quit;
+	} ThreadParameter;
 
 }
 
